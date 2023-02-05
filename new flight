@@ -1,0 +1,63 @@
+file = open('log_in.txt','r',encoding='utf8')
+from functions import log_in
+cnt = 0
+while True:
+    input_id = input('아이디를 입력하세요: ')
+    input_pw = input('비밀번호를 입력하세요: ')
+    if log_in(input_id,input_pw):
+        print(f"{input_id}님 로그인 되었습니다.")
+        break
+    else:
+        print('아이디나 비밀번호를 확인해주세요.')
+    cnt += 1
+    if cnt == 3:
+        print('로그인 횟수가 3회를 초과했습니다. 종료합니다.')
+        exit()
+cnt = 0
+while True:
+    player = input('O나 X를 선택해주세요: ')
+    if player in ['O','X']:
+        if player == 'O':
+            computer = 'x'
+        else:
+            computer = 'O'
+    else:
+        print('다시 입력해 주세요.')
+        cnt += 1
+    if cnt == 6:
+        print('입력해')
+    if cnt == 15:
+        print('하라고')
+board = ['*'] * 9
+display_board(board)
+나누기
+def log_in(input_id,input_pw):
+    file = open('log_in.txt','r',encoding='utf8')
+    lines = file.readlines()
+    id = ''
+    pw = ''
+    for line in lines:
+        key,value= line.split(':')#아이디와 비번을 콜론 기준으로 나누기
+        if '\n' in value:
+           value = value.replace('\n','')
+        if key == 'ID':
+            id = value
+        else:
+            pw = value
+            if id == input_id and pw == input_pw:
+                return True
+    return False
+def display_board(board):
+    for i in range(3):
+        print('------------')
+        print('|', board[i * 3], '|', board[i * 3 + 1], '|', board[i * 3 + 2], '|')
+    print('------------')
+
+
+def input_pos(board):
+    pos = int(input())
+
+    return pos
+# def victory(board,player):
+#     while True:
+#         if player
